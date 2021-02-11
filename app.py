@@ -12,11 +12,16 @@ default_app = initialize_app(cred)
 db = firestore.client()
 users_bmi = db.collection('usersbmi')
 
+app.config['DEBUG'] = True
+@app.route('/')
+def home_page():
+    """The home page."""
+    return render_template('index.html')
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/bmi', methods=['GET', 'POST'])
 def index():
     bmi = ''
-    output=''
+    output = ''
     if request.method == 'POST' and 'weight' in request.form:
         weight = float(request.form.get('weight'))
         height = float(request.form.get('height'))
@@ -24,7 +29,7 @@ def index():
         json = {'bmi': bmi, 'height': height, 'weight': weight}
         id = uuid.uuid1()
         users_bmi.document(str(id)).set(json)
-        if (bmi <= 18.5): 
+        if (bmi <= 18.5):
             output = "Under Weight"
         elif (bmi > 18.5 and bmi <= 24.9):
             output = "Normal Weight"
@@ -32,7 +37,7 @@ def index():
             output = "Over Weight"
         elif (bmi > 30.0):
             output = "OBESE"
-    return render_template("index.html",
+    return render_template("bmi_calc.html",
                            bmi=bmi,output=output)
 
 
@@ -43,3 +48,5 @@ def calc_bmi(weight, height):
 port = int(os.environ.get('PORT', 8080))
 if __name__ == '__main__':
     app.run()
+
+

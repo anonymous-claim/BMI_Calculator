@@ -3,37 +3,89 @@
 <head>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	
+
 	<title>BMI Calculator</title>
-	
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<style>
+.body{
+color:black;
+font-family: 'Oswald', sans-serif;
+font-size: 40px;
+}
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
 
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.centered img {
+  width: 500px;
+  border-radius: 70%;
+}
+</style>
 </head>
 
-<h1>BMI Calculator</h1>
+
 
 <body>
+<nav class="navbar fixed-top navbar-light" style="background-color: #6c63ff;">
 
-<div class="main">
-	<form class="pure-form" method="POST" action="/">
-	Weight in kgs:<br>
-	<input type="text" name="weight"><br>
-	Height in cms:<br>
-	<input type="text" name="height"><br>
-	<button type="submit" class="pure-button pure-button-primary" value="Submit">Submit</button>
+  <div class="container-fluid">
+     <a class="navbar-brand" href="#" style="color: white; font-family: 'Oswald', sans-serif; font-size: 40px,">BMI CHECKER</a>
+    <form class="d-flex" method="GET" action="/">
+      <button class="btn" style="color:white;" type="submit">Logout</button>
     </form>
-</div>
+  </div>
+</nav>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<div class="main centered">
+  <div class="card centered" style="width: 18rem;height: 25rem;">
+	<form class="pure-form centered" method="POST" action="/bmi">
+    <div class="mb-3">
+	Weight in kgs:<br>
+      <input type="text" name="weight"><br>
+    </div>
+    <div class="mb-3">
+    Height in cms:<br>
+	<input type="text" name="height"><br>
+    </div>
+    <div class="mb-3">
+	<button type="submit" class="btn" style="background-color: #6C63FF; color: white;" value="Submit">Submit</button>
+    </div>
+    </form>
+<div class="mb-3">
 
-<br>
-
-<div class="main">
 	{% if bmi %}
 	    <p>
         {% print("Your BMI is {}.".format(bmi)) %}
+		{% print("You are {}".format(output)) %}
         </p>
 	{% endif %}
 </div>
-
+</div>
+</div>
 </body>
