@@ -1,84 +1,103 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
-      <title>BMI Calculator</title>
-<style>
-.split {
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
 
-.left {
-  left: 0;
-}
+<head>
+    <meta name="google-signin-client_id"
+        content="127826886758-i350e429o74f6ufp1optpgg4o336shlo.apps.googleusercontent.com">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    <title>BMI Calculator</title>
+    <style>
+        .split {
+            height: 100%;
+            width: 50%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
 
-.right {
-  right: 0;
-}
+        .left {
+            left: 0;
+        }
 
-.centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+        .right {
+            right: 0;
+        }
 
-.centered img {
-  width: 500px;
-  border-radius: 70%;
-}
-</style>
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .centered img {
+            width: 500px;
+            border-radius: 70%;
+        }
+
+    </style>
 </head>
+
 <body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-<nav class="navbar fixed-top navbar-light" style="background-color: #6c63ff;">
-   <a class="navbar-brand" href="#" style="color: white; font-family: 'Oswald', sans-serif; font-size: 40px,">BMI CHECKER</a>
-</nav>
-<div class="split left">
-  <div class="centered">
-    <img src="{{ url_for('static', filename='doctors.svg') }}">
-  </div>
-</div>
-
-<div class="split right">
-  <div class="centered">
-    <div class="card" style="width: 18rem;height: 25rem;">
-       <div class="card-body">
-      <div class="col centered">
-        <div class="row">
-          <h3 style="color:black;font-family: 'Oswald', sans-serif; font-size: 40px,">Please</h3>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+    <script src="index.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+    <nav class="navbar fixed-top navbar-light" style="background-color: #6c63ff;">
+        <a class="navbar-brand" href="#" style="color: white; font-family: 'Oswald', sans-serif; font-size: 40px,">BMI
+            CHECKER</a>
+    </nav>
+    <div class="split left">
+        <div class="centered">
+            <img src="{{ url_for('static', filename='doctors.svg') }}">
         </div>
-  <div class="row">
-    <button type="button" class="btn modal-trigger" style="background-color: #6C63FF; color: white;" data-target="modal-login" >Login</button>
-
     </div>
-        <div class="row">
-          <h3 style="color:black;font-family: 'Oswald', sans-serif; font-size: 40px,">Or</h3>
+
+    <div class="split right">
+        <div class="centered">
+            <div class="card" style="width: 18rem;height: 25rem;">
+                <div class="card-body">
+                    <div class="col centered">
+                        
+
+                        <div class="row">
+                            <button type="button" class="btn modal-trigger"
+                                style="background-color: #6C63FF; color: white;"
+                                data-target="modal-login">Login</button>
+
+                        </div>
+                        <div class="row">
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        </div>
+                        <div class="row">
+                            <button type="button" class="btn modal-trigger"
+                                style="background-color: #6C63FF; color: white;" data-target="modal-signup">Sign
+                                Up</button>
+                                 <a href="forgetpassword.html">Forgot password? Reset here...</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    <div class = "row">
-        <button type="button" class="btn modal-trigger" style="background-color: #6C63FF; color: white;" data-target="modal-signup" >Sign Up</button>
     </div>
-      </div>
-    </div>
-</div>
-
-  </div>
-</div>
-     <!-- SIGN UP MODAL -->
+    <!-- SIGN UP MODAL -->
     <div id="modal-signup" class="modal">
         <div class="modal-content centered">
             <h4>Sign up</h4><br />
@@ -92,6 +111,10 @@
                     <label for="signup-password">Choose password</label>
                 </div>
                 <button class="btn" style="background-color: #6C63FF; color: white;">Sign up</button>
+
+
+
+
             </form>
         </div>
     </div>
@@ -108,6 +131,7 @@
                     <label for="login-password">Your password</label>
                 </div>
                 <button class="btn" style="background-color: #6C63FF; color: white;">Login</button>
+
             </form>
         </div>
     </div>
@@ -129,7 +153,13 @@
             databaseURL: "https://proud-life-280712.firebaseio.com",
             storageBucket: "proud-life-280712.appspot.com",
             messagingSenderId: "127826886758",
-            appId: "1:127826886758:web:4ead825f01801d1b1c6da7"
+            appId: "1:127826886758:web:4ead825f01801d1b1c6da7",
+            clientId: "127826886758-i350e429o74f6ufp1optpgg4o336shlo.apps.googleusercontent.com",
+            clientsecret: "6aR4Owk9voQaRDOp4mYDFaVz",
+            scopes: [
+                "email",
+                "profile",
+                "https://mail.google.com/"]
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -195,13 +225,14 @@
                 // close the signup modal & reset form
                 const modal = document.querySelector('#modal-login');
                 M.Modal.getInstance(modal).close();
-                window.location.pathname="/bmi"
+                window.location.pathname = "/bmi"
                 loginForm.reset();
                 alert("Login Successful");
             });
-          //if(e.code="auth/wrong-password"){
-          //  alert("The username or password you have entered is incorrect");
-          //  }
+            //   if(e.code="auth/wrong-password"){
+            //       console.log(e.code)
+            //    alert("The username or password you have entered is incorrect");
+            //    }
 
 
         });</script>
@@ -215,6 +246,24 @@
             M.Collapsible.init(items);
 
         });</script>
+
+    <script>
+
+        var provider = new firebase.auth.GoogleAuthProvider();
+        function onSignIn(googleUser) {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut()
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+
+
+        }
+    </script>
+
 </body>
 
 </html>
