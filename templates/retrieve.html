@@ -4,7 +4,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>BMI Calculator</title>
+	<title>BMI Calculator History</title>
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
@@ -41,7 +41,6 @@ font-size: 40px;
   transform: translate(-50%, -50%);
   text-align: center;
 }
-
 .centered img {
   width: 500px;
   border-radius: 70%;
@@ -68,29 +67,28 @@ font-size: 40px;
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 <div class="main centered">
-  <div class="card centered" style="width: 18rem;height: 25rem;">
-	<form class="pure-form centered" method="POST" action="/bmi">
+	<form class="pure-form centered" method="POST" action="/history">
     <input type="hidden" name="smname" id="smname" />
-    <div class="mb-3">
-	Weight in kgs:<br>
-      <input type="text" name="weight"><br>
-    </div>
-    <div class="mb-3">
-    Height in cms:<br>
-	<input type="text" name="height"><br>
-    </div>
-    <div class="mb-3">
-	<button type="submit" class="btn" style="background-color: #6C63FF; color: white;" value="Submit">Submit</button>
-    </div>
     </form>
+<div class="card centered" style="width: 25rem;border: 0;">
 <div class="mb-3">
+    <table class="table table-striped table-hover">
+    <tr>
+        <th>Height</th>
+        <th>Weight</th>
+        <th>BMI</th>
+        <th>Result</th>
+    </tr>
+      {% for i in jres %}
+      <tr>
 
-	{% if bmi %}
-	    <p>
-        {% print("Your BMI is {}.".format(bmi)) %}
-		{% print("You are {}".format(output)) %}
-        </p>
-	{% endif %}
+      <td>{% print("{}".format(i.height)) %}</td>
+      <td>{% print("{}".format(i.weight)) %}</td>
+      <td>{% print("{}".format(i.bmi)) %}</td>
+      <td>{% print("{}".format(i.output)) %}</td>
+    </tr>
+       {% endfor %}
+</table>
 </div>
 </div>
 </div>
@@ -100,5 +98,6 @@ font-size: 40px;
     return localStorage.getItem('user');
 };
   document.getElementById('smname').value = count();
+
 </script>
 </body>
