@@ -32,26 +32,7 @@ dockerImage = ''
                 echo 'This is a minimal pipeline.'
             }
         }
-     stage('SonarQube analysis') {
-        environment {
-            scannerHome = tool 'sonarqube-scanner'
-        }
-        steps {
-            withSonarQubeEnv('SonarQube') {
-                sh '''
-                ${scannerHome}/bin/sonar-scanner \
-                -D sonar.login=admin \
-                -D sonar.password=admin \
-                -D sonar.host.url=http://35.232.39.218:9000 \
-                -D sonar.projectKey=org.sonarqube:sonarscanner-maven-basic \
-                -D sonar.projectName=sonarscanner-maven-basic \
-                -D sonar.sources=/var/lib/jenkins/workspace/Quiz-pip/quiz/certificate_registration \
-                
-                
-                '''
-            }
-        }
-    }
+     
      
     
       stage('Build') {
