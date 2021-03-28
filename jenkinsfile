@@ -1,19 +1,24 @@
 pipeline {
-environment {
-registry = "ishu1108/docker-jenkins"
+    agent any
+	environment {
+		PROJECT_ID = 'meta-router-280711'
+                CLUSTER_NAME = 'k8s-cluster'
+                LOCATION = 'us-central1-c'
+                CREDENTIALS_ID = 'meta-router-280711'		
+                registry = "ishu1108/docker-jenkins"
 registryCredential = 'dockerhub'
 dockerImage = ''
-}
-   agent any
-   tools { 
-        maven 'Maven-3.6.3' 
-        jdk 'jdk8'
-    }
-    
-
-   
-
+	}
+	
     stages {
+    stage ('Code Pull') {
+      steps{
+        script{
+          sh 'echo "Pull Successful"'
+        }
+      }
+    }
+	stages {
         stage ('Initialize') {
             steps {
                 sh '''
@@ -22,14 +27,28 @@ dockerImage = ''
                 ''' 
             }
         }
-
-        stage ('Build-maven') {
-            steps {
-                echo 'This is a minimal pipeline.'
+        }
+        stage('SonarQube analysis') {
+        environment {
+            scannerHome = tool 'sonarqube-scanner'
+        }
+        steps {
+            withSonarQubeEnv('SonarQube') {
+                sh '''
+                ${scannerHome}/bin/sonar-scanner \
+                -D sonar.login=admin \
+                -D sonar.password=admin \
+                -D sonar.host.url=http://35.232.39.218:9000 \
+                -D sonar.projectKey=org.sonarqube:sonarscanner-maven-basic \
+                -D sonar.projectName=sonarscanner-maven-basic \
+                -D sonar.sources=/var/lib/jenkins/workspace/Quiz-pip/quiz/certificate_registration \
+                
+                
+                '''
             }
         }
-     
-      stage('Build') {
+    }
+	    stage('Build') {
         steps {
           echo 'Building...'
           echo "Running ${env.BUILD_ID} ${env.BUILD_DISPLAY_NAME} on ${env.NODE_NAME} and JOB ${env.JOB_NAME}"
@@ -53,5 +72,20 @@ dockerImage.push()
 }
 }
 }
-}
+	    
+	    stage('Deploy to K8s') {
+		    steps{
+			    echo "Deployment started ..."
+			    sh 'ls -ltr'
+			    sh 'pwd'
+			    sh "sed -i 's/tagversion/${env.BUILD_ID}/g' serviceLB.yaml"
+				sh "sed -i 's/tagversion/${env.BUILD_ID}/g' deployment.yaml"
+			    echo "Start deployment of serviceLB.yaml"
+			    step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'serviceLB.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+				echo "Start deployment of deployment.yaml"
+				step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+			    echo "Deployment Finished ..."
+		    }
+	    }
+    }
 }
