@@ -1,0 +1,57 @@
+pipeline {
+environment {
+registry = "ishu1108/docker-jenkins"
+registryCredential = 'dockerhub'
+dockerImage = ''
+}
+   agent any
+   tools { 
+        maven 'Maven-3.6.3' 
+        jdk 'jdk8'
+    }
+    
+
+   
+
+    stages {
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                ''' 
+            }
+        }
+
+        stage ('Build-maven') {
+            steps {
+                echo 'This is a minimal pipeline.'
+            }
+        }
+     
+      stage('Build') {
+        steps {
+          echo 'Building...'
+          echo "Running ${env.BUILD_ID} ${env.BUILD_DISPLAY_NAME} on ${env.NODE_NAME} and JOB ${env.JOB_NAME}"
+        }
+   }
+   stage('Building our image') {
+steps{
+script {
+dockerImage = docker.build registry + ":$BUILD_NUMBER"
+}
+sh 'cd /var/lib/jenkins/workspace/Quiz-pip'
+sh 'docker system prune -a'
+}
+}
+stage('Deploy our image') {
+steps{
+script {
+docker.withRegistry( '', registryCredential ) {
+dockerImage.push()
+}
+}
+}
+}
+}
+}
