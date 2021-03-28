@@ -1,25 +1,23 @@
 pipeline {
-    agent any
-	environment {
-		PROJECT_ID = 'meta-router-280711'
-                CLUSTER_NAME = 'k8s-cluster'
-                LOCATION = 'us-central1-c'
-                CREDENTIALS_ID = 'meta-router-280711'		
-                registry = "ishu1108/docker-jenkins"
+environment {
+PROJECT_ID = 'meta-router-280711'
+CLUSTER_NAME = 'k8s-cluster'
+LOCATION = 'us-central1-c'
+CREDENTIALS_ID = 'meta-router-280711'
+registry = "ishu1108/docker-jenkins"
 registryCredential = 'dockerhub'
 dockerImage = ''
-	}
-	
+}
+   agent any
+   tools { 
+        maven 'Maven-3.6.3' 
+        jdk 'jdk8'
+    }
+    
+
+   
+
     stages {
-    stage ('Code Pull') {
-      steps{
-        script{
-          sh 'echo "Pull Successful"'
-        }
-      }
-    }
-    }
-	stages {
         stage ('Initialize') {
             steps {
                 sh '''
@@ -28,8 +26,13 @@ dockerImage = ''
                 ''' 
             }
         }
+
+        stage ('Build-maven') {
+            steps {
+                echo 'This is a minimal pipeline.'
+            }
         }
-        stage('SonarQube analysis') {
+     stage('SonarQube analysis') {
         environment {
             scannerHome = tool 'sonarqube-scanner'
         }
@@ -49,7 +52,9 @@ dockerImage = ''
             }
         }
     }
-	    stage('Build') {
+     
+    
+      stage('Build') {
         steps {
           echo 'Building...'
           echo "Running ${env.BUILD_ID} ${env.BUILD_DISPLAY_NAME} on ${env.NODE_NAME} and JOB ${env.JOB_NAME}"
@@ -71,10 +76,10 @@ docker.withRegistry( '', registryCredential ) {
 dockerImage.push()
 }
 }
+
 }
 }
-	    
-	    stage('Deploy to K8s') {
+stage('Deploy to K8s') {
 		    steps{
 			    echo "Deployment started ..."
 			    sh 'ls -ltr'
@@ -88,5 +93,5 @@ dockerImage.push()
 			    echo "Deployment Finished ..."
 		    }
 	    }
-    }
-
+}
+}
