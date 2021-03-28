@@ -18,6 +18,7 @@ dockerImage = ''
         }
       }
     }
+    }
 	stages {
         stage ('Initialize') {
             steps {
@@ -88,4 +89,4 @@ dockerImage.push()
 		    }
 	    }
     }
-}
+
