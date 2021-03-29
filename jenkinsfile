@@ -1,4 +1,5 @@
 pipeline {
+agent any
 environment {
 PROJECT_ID = 'meta-router-280711'
 CLUSTER_NAME = 'k8s-cluster'
@@ -8,7 +9,7 @@ registry = "ishu1108/docker-jenkins"
 registryCredential = 'dockerhub'
 dockerImage = ''
 }
-   agent any
+  
    tools { 
         maven 'Maven-3.6.3' 
         jdk 'jdk8'
