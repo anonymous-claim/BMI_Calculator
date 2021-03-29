@@ -3,7 +3,7 @@ agent any
 environment {
 PROJECT_ID = 'meta-router-280711'
 CLUSTER_NAME = 'cluster'
-LOCATION = 'europe-central2-a '
+LOCATION = 'europe-central2-a'
 CREDENTIALS_ID = 'meta-router-280711'
 registry = "ishu1108/docker-jenkins"
 registryCredential = 'dockerhub'
