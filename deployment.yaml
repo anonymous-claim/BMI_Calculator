@@ -16,7 +16,7 @@ spec:
   spec:
    containers:
    - name: myapp
-     image: ameintu/devops:tagversion
+     image: ishu1108/docker-jenkins:tagversion
      ports:
      - containerPort: 8080
 
