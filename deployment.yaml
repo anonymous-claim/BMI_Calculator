@@ -1,24 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-gke
+ name: bmi
+ labels:
+  app: bmi
 spec:
-  replicas: 1
+ replicas: 1
+ selector:
+  matchLabels:
+   app: bmi
+ template:
+  metadata: 
+   labels:
+    app: bmi
+  spec:
+   containers:
+   - name: bmi
+     image: ishu1108/docker-jenkins:tagversion
+     ports:
+     - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bmi
+spec:
+  type: LoadBalancer
   selector:
-    matchLabels:
-      app: bmi
-  template:
-    metadata:
-      labels:
-        app: bmi
-    spec:
-      containers:
-      - name: bmi-app
-        # Replace $GCLOUD_PROJECT with your project ID
-        image: gcr.io/serious-sylph-284014/bmiimage:latest
-        # This app listens on port 8080 for web traffic by default.
-        ports:
-        - containerPort: 8080
-        env:
-          - name: PORT
-            value: "5000"
+    app: bmi
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
