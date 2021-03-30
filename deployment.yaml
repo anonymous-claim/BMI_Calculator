@@ -15,7 +15,7 @@ spec:
     app: bmi
   spec:
    containers:
-   - name: bmi
+   - name: bmi-app
      image: gcr.io/serious-sylph-284014/bmiimage:latest
      ports:
      - containerPort: 8080
