@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: bmi
+ name: myapp
  labels:
-  app: bmi
+  app: myapp
 spec:
  replicas: 1
  selector:
   matchLabels:
-   app: bmi
+   app: myapp
  template:
   metadata: 
    labels:
-    app: bmi
+    app: myapp
   spec:
    containers:
-   - name: bmi-app
-     image: gcr.io/serious-sylph-284014/certimage:latest
+   - name: myapp
+     image: ishu1108/docker-jenkins:tagversion
      ports:
      - containerPort: 8080
 
@@ -24,11 +24,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: bmi
+  name: myapp
 spec:
   type: LoadBalancer
   selector:
-    app: bmi
+    app: myapp
   ports:
     - protocol: TCP
       port: 80
