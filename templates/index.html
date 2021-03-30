@@ -150,21 +150,20 @@
 <script>
   // Your web app's Firebase configuration
   var firebaseConfig = {
-    apiKey: "AIzaSyAqJ9jn450h6ao3ywQq0tRDWoOuHZi5-sI",
-    authDomain: "serious-sylph-284014.firebaseapp.com",
-    projectId: "serious-sylph-284014",
-    storageBucket: "serious-sylph-284014.appspot.com",
-    messagingSenderId: "296798242791",
-    appId: "1:296798242791:web:17a41cb3bb389f22831f42",
-    databaseURL: "https://serious-sylph-284014.firebaseio.com"
+  apiKey: "AIzaSyAqJ9jn450h6ao3ywQq0tRDWoOuHZi5-sI",
+  authDomain: "serious-sylph-284014.firebaseapp.com",
+  projectId: "serious-sylph-284014",
+  storageBucket: "serious-sylph-284014.appspot.com",
+  messagingSenderId: "296798242791",
+  appId: "1:296798242791:web:17a41cb3bb389f22831f42"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-    //const auth = firebase.auth();
-       // const db = firebase.firestore();
+    const auth = firebase.auth();
+        const db = firebase.firestore();
 
         // update firestore settings
-       // db.settings({ timestampsInSnapshots: true });
+        db.settings({ timestampsInSnapshots: true });
 </script>
 
     <!-- Compiled and minified JavaScript -->
