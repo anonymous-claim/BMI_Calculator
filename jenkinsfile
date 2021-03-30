@@ -60,14 +60,16 @@ dockerImage.push()
 
 }
 }
-stage('Deploy to Kubernetes'){
-        steps{
-            sh 'gcloud container clusters get-credentials helloworld-gke \
-                --zone us-west1-a \
-                --project serious-sylph-284014'
-            sh 'kubectl apply -f deployment.yaml'
-            sh 'kubectl apply -f serviceLB.yaml'
-        }
-    }
+stage('Deploy to K8s') {
+		    steps{
+			    echo "Deployment started ..."
+			    sh 'ls -ltr'
+			    sh 'pwd'
+			    sh "sed -i 's/tagversion/${env.BUILD_ID}/g' deployment.yaml"
+			    echo "Start deployment of deployment.yaml"
+				step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+			    echo "Deployment Finished ..."
+		    }
+	    }
 }
 }
