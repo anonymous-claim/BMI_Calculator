@@ -13,7 +13,7 @@ spec:
         app: bmi
     spec:
       containers:
-      - name: bmi
+      - name: bmi-app
         # Replace $GCLOUD_PROJECT with your project ID
         image: gcr.io/serious-sylph-284014/bmiimage:latest
         # This app listens on port 8080 for web traffic by default.
