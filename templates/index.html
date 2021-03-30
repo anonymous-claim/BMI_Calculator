@@ -143,36 +143,30 @@
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
 
-    <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyARdWikuedG7jFfW62Rr-uP1bZDba2mZQw",
-            authDomain: "proud-life-280712.firebaseapp.com",
-            projectId: "proud-life-280712",
-            databaseURL: "https://proud-life-280712.firebaseio.com",
-            storageBucket: "proud-life-280712.appspot.com",
-            messagingSenderId: "127826886758",
-            appId: "1:127826886758:web:4ead825f01801d1b1c6da7",
-            clientId: "127826886758-6d8o71bsj58p078qt85c3e7du8i913mf.apps.googleusercontent.com",
-            clientsecret: "ts0ZFUlwRqTBkTL-3rEWHBLt",
-            scopes: [
-                "email",
-                "profile",
-                "https://mail.google.com/"]
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        // make auth and firestore references
-        const auth = firebase.auth();
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAqJ9jn450h6ao3ywQq0tRDWoOuHZi5-sI",
+    authDomain: "serious-sylph-284014.firebaseapp.com",
+    projectId: "serious-sylph-284014",
+    storageBucket: "serious-sylph-284014.appspot.com",
+    messagingSenderId: "296798242791",
+    appId: "1:296798242791:web:17a41cb3bb389f22831f42"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
         const db = firebase.firestore();
 
         // update firestore settings
         db.settings({ timestampsInSnapshots: true });
-
-
-
-    </script>
+</script>
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
