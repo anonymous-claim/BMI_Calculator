@@ -4,6 +4,7 @@ environment {
 PROJECT_ID = 'serious-sylph-284014'
 CLUSTER_NAME = 'helloworld-gke'
 LOCATION = 'us-west1-a'
+CREDENTIALS_ID = 'serious-sylph-284014'
 registry = "ishu1108/docker-jenkins"
 registryCredential = 'dockerhub'
 dockerImage = ''
