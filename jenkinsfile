@@ -73,4 +73,9 @@ stage('Deploy to K8s') {
 		    }
 	    }
 }
+post { 
+        always { 
+            cleanWs()
+        }
+    }
 }
